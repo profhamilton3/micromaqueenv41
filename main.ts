@@ -17,10 +17,22 @@ radio.onReceivedNumber(function (receivedNumber) {
         maqueen.motorStop(maqueen.Motors.All)
     }
 })
+let dist = 0
 radio.setGroup(1)
 radio.setFrequencyBand(31)
 basic.showNumber(1)
 maqueen.motorStop(maqueen.Motors.All)
 basic.forever(function () {
-	
+    dist = maqueen.Ultrasonic(PingUnit.Centimeters)
+    if (dist < 5) {
+        maqueen.motorStop(maqueen.Motors.All)
+        basic.pause(1000)
+        maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CCW, 25)
+        basic.pause(1000)
+        maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CCW, 25)
+        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 25)
+        basic.pause(1250)
+    } else {
+        basic.pause(200)
+    }
 })
