@@ -6,7 +6,8 @@
         "radio": "*",
         "microphone": "*",
         "maqueen": "github:dfrobot/pxt-maqueen#v1.7.2",
-        "MakerBit-Ultrasonic": "github:1010technologies/pxt-makerbit-ultrasonic#v1.0.8"
+        "MakerBit-Ultrasonic": "github:1010technologies/pxt-makerbit-ultrasonic#v1.0.8",
+        "datalogger": "*"
     },
     "files": [
         "main.blocks",

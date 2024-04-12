@@ -5,6 +5,12 @@ function power_adjust (num: number) {
         MPWR = 250
     }
 }
+makerbit.onUltrasonicObjectDetected(20, DistanceUnit.CM, function () {
+    datalogger.log(
+    datalogger.createCV("UsDx", makerbit.getUltrasonicDistance(DistanceUnit.CM)),
+    datalogger.createCV("mtrpwr", MPWR)
+    )
+})
 radio.onReceivedNumber(function (receivedNumber) {
     basic.showNumber(receivedNumber)
     if (0 == receivedNumber) {
@@ -34,7 +40,11 @@ radio.onReceivedNumber(function (receivedNumber) {
     }
     power_adjust(MPWR)
 })
+datalogger.onLogFull(function () {
+    datalogger.deleteLog(datalogger.DeleteType.Fast)
+})
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    datalogger.deleteLog(datalogger.DeleteType.Full)
     basic.showNumber(group_id)
     music.play(music.builtinPlayableSoundEffect(soundExpression.hello), music.PlaybackMode.UntilDone)
 })
@@ -48,8 +58,17 @@ basic.showNumber(group_id)
 maqueen.motorStop(maqueen.Motors.All)
 MPWR = 100
 music.setVolume(50)
+datalogger.includeTimestamp(FlashLogTimeStampFormat.Seconds)
+datalogger.setColumnTitles(
+"UsDx",
+"mtrpwr"
+)
 loops.everyInterval(500, function () {
-    if (makerbit.isUltrasonicDistanceLessThan(1, DistanceUnit.INCH)) {
+    datalogger.log(
+    datalogger.createCV("UsDx", makerbit.getUltrasonicDistance(DistanceUnit.CM)),
+    datalogger.createCV("mtrpwr", MPWR)
+    )
+    if (makerbit.isUltrasonicDistanceLessThan(5, DistanceUnit.CM)) {
         maqueen.motorStop(maqueen.Motors.All)
         music._playDefaultBackground(music.builtInPlayableMelody(Melodies.PowerDown), music.PlaybackMode.InBackground)
         basic.showIcon(IconNames.Ghost)
