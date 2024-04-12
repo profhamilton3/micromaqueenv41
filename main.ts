@@ -8,7 +8,8 @@ function power_adjust (num: number) {
 makerbit.onUltrasonicObjectDetected(20, DistanceUnit.CM, function () {
     datalogger.log(
     datalogger.createCV("UsDx", makerbit.getUltrasonicDistance(DistanceUnit.CM)),
-    datalogger.createCV("mtrpwr", MPWR)
+    datalogger.createCV("mtrpwr", MPWR),
+    datalogger.createCV("timestamp", control.millis())
     )
 })
 radio.onReceivedNumber(function (receivedNumber) {
@@ -61,7 +62,8 @@ music.setVolume(50)
 datalogger.includeTimestamp(FlashLogTimeStampFormat.Seconds)
 datalogger.setColumnTitles(
 "UsDx",
-"mtrpwr"
+"mtrpwr",
+"timestamp"
 )
 loops.everyInterval(500, function () {
     datalogger.log(
