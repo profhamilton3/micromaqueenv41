@@ -8,8 +8,7 @@ function power_adjust (num: number) {
 makerbit.onUltrasonicObjectDetected(20, DistanceUnit.CM, function () {
     datalogger.log(
     datalogger.createCV("UsDx", makerbit.getUltrasonicDistance(DistanceUnit.CM)),
-    datalogger.createCV("mtrpwr", MPWR),
-    datalogger.createCV("timestamp", control.millis())
+    datalogger.createCV("mtrpwr", MPWR)
     )
 })
 radio.onReceivedNumber(function (receivedNumber) {
@@ -59,11 +58,10 @@ basic.showNumber(group_id)
 maqueen.motorStop(maqueen.Motors.All)
 MPWR = 100
 music.setVolume(50)
-datalogger.includeTimestamp(FlashLogTimeStampFormat.Seconds)
+datalogger.includeTimestamp(FlashLogTimeStampFormat.Milliseconds)
 datalogger.setColumnTitles(
 "UsDx",
-"mtrpwr",
-"timestamp"
+"mtrpwr"
 )
 loops.everyInterval(500, function () {
     datalogger.log(
